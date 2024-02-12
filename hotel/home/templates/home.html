@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{%  block start %}
+
+<!-- jumbotron and nav -->
+<section class="colorful jumbotron mb-0" role="banner">
+    <nav class="navbar navbar-expand-lg justify-content-between navbar-dark" role="navigation">
+        <div class="navbar-brand">
+            <a href="index.html">Hotel Spoof
+                <em>.</em>
+            </a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+       
+    </nav>
+
+    <div class="container hotels-container">
+
+        <div class="row mt-2 justify-content-between">
+            <div class="col-md-10 text-white align-self-center mb-2 p-4">
+                <h1>HOTEL World</h1>
+                <span class="">Book with ease. From beach resortss to city apartmnets, find the prefect for the right price. 
+                    Manage your trip and make the trip with joy...
+                </span>
+            </div>
+           
+        </div>
+    </div>
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://source.unsplash.com/1000x300/?hotel_room" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://source.unsplash.com/1000x300/?hotel_room,sea_view" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://source.unsplash.com/1000x300/?hotel" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+</section>
+
+<section class="search-container mb-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="row my-3">
+
+                                
+                </div>
+                <div class="row mt-2 justify-content-between">
+                    <div class="filter-card">
+                        <h5>Filter</h5>
+                        <form action="#">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="mintopay">Check in</label>
+                                    <p>
+                                        <input type="date" name="checkin" id="checkin" class="form-control">
+                                    </p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="maxtopay">Check out</label>
+                                    <p>
+                                        <input type="date" name="checkout" id="checkout" class="form-control">
+                                    </p>
+                                </div>
+                            </div>
+                           
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Limit">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-9  px-4 mb-5">
+                <form>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                    <div class="form-inline">
+                        <label class="" for="exampleFormControlSelect1">Sort by</label>
+                        <select class="form-control" name="sort_by" id="exampleFormControlSelect1">
+                            <option value="">Recommended</option>
+                            <option {% if sort_by == 'ASC' %} selected {%endif %} value ="ASC">ASC</option>
+                            <option {% if sort_by == 'DSC' %} selected {%endif %} value ="DSC">DSC</option>
+                        
+                        </select>
+                    </div>  
+                    </div>  
+                    <div class="col-md-4">    
+                        <div class="form-inline">
+                            <label class="" for="exampleFormControlSelect1">Search</label>
+                            <input name="search" class="form-control" value="{{search}}" placeholder="Search"> 
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-inline">
+                           <label class="" for="exampleFormControlSelect1">Amenities</label>
+                            <select name="amenities" class="form-control" multiple>
+                            <option value="">Choose</option>
+                            {% for amenities_obj in amenities_objs %}
+                            <option {% if amenities_obj.amenity_name in amenities  %} selected {%endif%}value="{{amenities_obj.amenity_name}}">{{amenities_obj.amenity_name}}</option>
+                                {% endfor %}
+                        </select>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                     
+                            <button style="margin-top: 30px;" type="submit" class="btn btn-success">Find</button>
+                        </div>
+                </div>
+                </form>
+                
+                {% for hotels_obj in hotels_objs %}
+                <div class="row search-card-result">
+                        
+                    <div class="col-md-3">
+                        <a href="/hotel-detail/{{hotels_obj.uid}}">
+                        <img class="img-fluid" src="/media/{{hotels_obj.images.first.images}}"  alt="Card image cap">
+                        </a>
+                    </div>
+                    
+               
+                    <div class="col-md-5">
+                        <h5>{{hotels_obj.hotel_name}}</h5>
+                        
+                        <p>
+                            {{hotels_obj.description|truncatechars:200}}</p>
+                        <p>
+                            {%for amenitie in hotels_obj.amenities.all %}
+                            <b>{{amenitie.amenity_name}}</b>,
+                            {% endfor %}
+                        </p>
+                        
+                    </div>
+                    <div class="col-md-2 border-left text-center more-offers">
+                        
+                        <s>$ 1500</s>
+                        <p>$ {{hotels_obj.hotel_price}}</p>
+                        <p>Room count</p>
+                        <p>{{hotels_obj.room_count}}</p>
+                    </div>
+                    <div class="col-md-2 border-left text-center more-offers">
+                       
+                        <div class="btn btn-success">View deal </div>
+                    </div>
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
